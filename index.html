@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" property="og:description" content="Calculadora de descuentos a partir de un porcentaje">
+	<meta name="viewport" content="width=device-width">
+	<title>Calculadora de descuentos</title>
+	<link rel="icon" href="./favicon/32x32.png" sizes="32x32">
+	<link rel="icon" href="./favicon/16x16.png" sizes="16x16">
+	<link rel="apple-touch-icon" href="./favicon/apple-touch-icon.png">
+	<link rel="icon" href="./favicon/favicon.ico" type="image/x-icon">
+	
+	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		body{
+			background-color: #fafafa;
+		}
+		#formulario{
+			display: flex;
+			height: 75vh;
+			justify-content:center;
+			align-items:center;
+		}
+		fieldset{
+			text-align: center;
+			padding: 1em;
+		}
+		label,#resultado,input[type=number],button{
+			font-size: 22px;
+		}
+		button{
+			padding: 8px;
+		}
+		#resultado, #resultado:focus-visible{
+			display: inline;
+			border-top: none;
+			border-right: none;
+			border-left: none;
+			outline: none;
+		}
+		.descripcion{
+			text-align: center;
+			padding-top: 3em;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="descripcion">
+		<h1>Calculadora de descuentos</h1>
+		<p>Calculadora sencilla para realizar descuentos. Escribe la cantidad y el porcentaje de descuento a calcular.</p>
+	</section>
+	<section id="formulario">
+		<fieldset>
+			<legend></legend>
+			<form name="formulario"  style="margin-bottom: 2em;">
+				<label for="cantidad">Cantidad:</label>
+				<input type="number" id="cantidad" name="cantidad" min="0"><br><br>
+				<label for="descuento">Descuento:</label>
+				<input type="number" id="descuento" name="descuento" min="0"> %<br><br>
+				<label for="resultado">Resultado:</label>
+				<input type="number" id="resultado" name="resultado" min="0" readonly><br><br>
+				<button type="button" style="float: left;font-size: 17px;" onclick="document.forms.formulario.cantidad.value='';document.forms.formulario.descuento.value='';document.forms.formulario.resultado.value='';">Borrar</button>
+				<button type="button" onclick="calculate()">Calcular</button>
+			</form>
+			<i>El resultado se redondea a dos decimales</i>
+		   </fieldset>
+	</section>
+
+	<script>
+		function calculate(){
+			let cantidad = parseFloat(document.forms.formulario.cantidad.value);
+			let descuento = parseFloat(document.forms.formulario.descuento.value);
+ 
+			 // Calcular el precio con descuento
+			let precioConDescuento = cantidad - (cantidad * (descuento / 100));
+ 
+			 // Mostrar el resultado en el elemento con id 'resultado'
+			document.forms.formulario.resultado.value = precioConDescuento.toFixed(2);
+		}
+
+		function dosDecimales(numero){
+			if(numero.value.indexOf(".")>=0 && (numero.value.length-numero.value.indexOf("."))>3){ 
+				numero.value = numero.value.substring(0,(numero.value.length-1)); return false;
+			}
+			if(numero.value.indexOf(",")>=0 && (numero.value.length-numero.value.indexOf(","))>3){ 
+				numero.value = numero.value.substring(0,(numero.value.length-1)); return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+
+</html>
