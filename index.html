@@ -60,6 +60,9 @@
 			/*box-shadow: rgb(0, 0, 0) 8px 5px 0px 0px;*/
 			transform: scale(1.25);
 		}
+		#mensajeDescuento{
+			margin-bottom: 1em;
+		}
 	</style>
 </head>
 
@@ -78,9 +81,10 @@
 				<input type="number" id="descuento" name="descuento" min="0"> %<br><br>
 				<label for="resultado">Resultado:</label>
 				<input type="number" id="resultado" name="resultado" min="0" readonly><br><br>
-				<button type="button" style="float: left;font-size: 17px;" onclick="document.forms.formulario.cantidad.value='';document.forms.formulario.descuento.value='';document.forms.formulario.resultado.value='';">Borrar</button>
+				<button type="button" style="float: left;font-size: 17px;" onclick="document.forms.formulario.cantidad.value='';document.forms.formulario.descuento.value='';document.forms.formulario.resultado.value='';document.getElementById('mensajeDescuento').textContent='';">Borrar</button>
 				<button type="button" onclick="calculate()">Calcular</button>
 			</form>
+			<div id="mensajeDescuento"></div>
 			<i>El resultado se redondea a dos decimales</i>
 		   </fieldset>
 	</section>
@@ -99,11 +103,17 @@
 			let cantidad = parseFloat(document.forms.formulario.cantidad.value);
 			let descuento = parseFloat(document.forms.formulario.descuento.value);
  
-			 // Calcular el precio con descuento
-			let precioConDescuento = cantidad - (cantidad * (descuento / 100));
+			  // Calcular el descuento
+			    let descuentoCalculado = cantidad * (descuento / 100);
+			
+			    // Calcular el precio con descuento
+			    let precioConDescuento = cantidad - descuentoCalculado;
  
 			 // Mostrar el resultado en el elemento con id 'resultado'
 			document.forms.formulario.resultado.value = precioConDescuento.toFixed(2);
+			let mensajeDescuento = `Este ha sido el descuento: ${descuentoCalculado.toFixed(2)}`;
+			document.getElementById('mensajeDescuento').textContent = mensajeDescuento;
+
 		}
 
 		function dosDecimales(numero){
